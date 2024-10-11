@@ -16,7 +16,7 @@ My personal nvim configuration, built on top of kickstart-nvim, adding stuff to 
 2. Clone the repo
     ```sh
     mkdir ~/.config/nvim
-    git clone https://github.com/ugly-custard/nvim ~/.config/nvim/
+    git clone https://github.com/ugly-custard/nvim.git ~/.config/nvim/
     ```
 
 ## Keybinds
