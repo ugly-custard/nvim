@@ -1,11 +1,13 @@
 local options = {
   mouse = "a",
   clipboard = "unnamedplus",
+  title = true,
 
   -- Indentation
   tabstop = 2,
   shiftwidth = 2,
   expandtab = true,
+  autoindent = true,
   smartindent = true,
   breakindent = true,
 
@@ -35,6 +37,7 @@ local options = {
   swapfile = false,
   writebackup = false,
   fileencoding = "utf-8",
+  encoding = "utf-8",
 
   -- Searching
   inccommand = "split", -- nosplit default
@@ -88,6 +91,7 @@ vim.g.loaded_netrwPlugin = 1 -- same as above
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+vim.opt.wildignore:append({ ".git", "*/node_modules/*" }) ---@diagnostic disable-line: param-type-mismatch
 
 -- vim.cmd[[highlight clear SignColumn]]
 

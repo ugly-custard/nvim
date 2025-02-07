@@ -145,14 +145,25 @@ return {
             },
           },
         },
-        -- cssls = {},
-        -- html = {},
-        -- ts_ls = {},
-        -- pyright = {},
-        -- clangd = {},
-
-        -- bashls = {},
-        -- jsonls = {},
+        html = {},
+        cssls = {},
+        tailwindcss = {
+          root_dir = require("lspconfig.util").root_pattern(".git"),
+        },
+        ts_ls = {
+          root_dir = require("lspconfig.util").root_pattern(".git"),
+          settings = {
+            typescript = {
+              -- Disable TS Server's built-in formatting so we can use Prettier
+              format = nil,
+            },
+            javascript = {
+              -- Disable TS Server's built-in formatting so we can use Prettier
+              format = nil,
+            },
+          },
+        },
+        ruff = {},
       }
 
       require("mason").setup({

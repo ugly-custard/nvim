@@ -2,6 +2,14 @@ local keymap = vim.keymap.set
 -- Clear highlight on pressing <Esc> in normal mode
 keymap("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+-- Quality of Life keymaps
+keymap("i", "jk", "<ESC>", { desc = "Exit insert mode" })
+keymap("i", "kj", "<ESC>", { desc = "Exit insert mode" })
+keymap("n", "<C-a>", "ggVG", { desc = "Select all" })
+keymap("n", "+", "<C-a>", { desc = "Increment number under cursor" })
+keymap("n", "-", "<C-x>", { desc = "Decrement number under cursor" })
+keymap("n", "<leader>w", ":update<CR>", { desc = "Save current file" })
+
 -- Diagnostic keymaps
 keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
@@ -35,10 +43,19 @@ keymap("n", "<A-1>", ":tabmove -<CR>", { desc = "Move tab to the left" })
 keymap("n", "<A-2>", ":tabmove +<CR>", { desc = "Move tab to the right" })
 
 -- Move text up and down
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi<Esc>", { desc = "Move line down" })
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi<Esc>", { desc = "move line up" })
+keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
+keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", { desc = "move line up" })
 keymap("v", "<A-j>", ":m .+1<CR>==", { desc = "Move block down" })
 keymap("v", "<A-k>", ":m .-2<CR>==", { desc = "Move block up" })
+
+keymap("x", "J", ":move '>+1<CR>gv-gv", { desc = "Move selected text down" })
+keymap("x", "K", ":move '<-2<CR>gv-gv", { desc = "Move selected text up" })
+keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", { desc = "Move selected text block down" })
+keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", { desc = "Move selected text block up" })
+
+-- Stay in indent mode
+keymap("v", "<", "<gv", { desc = "Indent selected text" })
+keymap("v", ">", ">gv", { desc = "Unindent selected text" })
 
 -- [[ Autocommands ]]
 
