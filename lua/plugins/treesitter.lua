@@ -28,10 +28,8 @@ return {
         lint_events = { "BufWrite", "CursorHold" },
       },
     },
-    config = function(_, opts)
+    config = function()
       require("nvim-treesitter.install").prefer_git = true
-      ---@diagnostic disable-next-line: missing-fields
-      require("nvim-treesitter.configs").setup(opts)
     end,
   },
 }

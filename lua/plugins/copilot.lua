@@ -40,17 +40,17 @@ return {
     "CopilotC-Nvim/CopilotChat.nvim",
     event = "VeryLazy",
     enabled = true,
-    branch = "canary",
+    branch = "main",
     dependencies = {
       { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim" },
     },
     opts = {
       debug = false,
+      chat_auto_open = true,
     },
     config = function(_, opts)
       require("CopilotChat").setup(opts)
-      require("CopilotChat.integrations.cmp").setup()
       vim.keymap.set("n", "<leader>c", ":CopilotChat<CR>", { desc = "Copilot Chat" })
     end,
   },
