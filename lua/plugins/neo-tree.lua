@@ -8,10 +8,12 @@ return {
     { -- Optional image support in preview window
       "3rd/image.nvim",
       dependencies = {
-        "vhyrro/luarocks.nvim",
-        priority = 1001,
-        opts = {
-          rocks = { "magick" },
+        {
+          "vhyrro/luarocks.nvim",
+          priority = 1001,
+          opts = {
+            rocks = { "magick" },
+          },
         },
       },
       opts = { backend = "kitty" },
@@ -29,7 +31,7 @@ return {
   },
   cmd = "Neotree",
   keys = {
-    { "\\", "<cmd>Neotree toggle<CR>", { desc = "NeoTree toggle" } },
+    { "\\", "<cmd>Neotree toggle<CR>", desc = "NeoTree toggle" },
   },
   init = function()
     vim.api.nvim_create_autocmd("BufEnter", {

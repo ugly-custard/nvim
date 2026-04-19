@@ -185,7 +185,6 @@ return {
         },
         experimental = {
           ghost_text = true,
-          native_menu = false,
         },
       })
     end,
