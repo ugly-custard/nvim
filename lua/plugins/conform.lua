@@ -8,7 +8,7 @@ return {
     {
       "<leader>f",
       function()
-        require("conform").format({ async = true, lsp_fallback = true })
+        require("conform").format({ async = true, lsp_format = "fallback" })
       end,
       mode = "",
       desc = "[F]ormat buffer",
@@ -25,7 +25,7 @@ return {
         prepend_args = { "-i", "2" },
       },
     },
-    format_on_save = { timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { timeout_ms = 1000, lsp_format = "fallback" },
   },
   -- init = function()
   --   vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
