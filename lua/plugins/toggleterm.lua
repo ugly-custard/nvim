@@ -26,16 +26,15 @@ return {
   config = function(_, opts)
     require("toggleterm").setup(opts)
 
-    function SetTerminalKeymaps()
-      local o = { noremap = true }
-      vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], o)
-      vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], o)
-      vim.api.nvim_buf_set_keymap(0, "t", "kj", [[<C-\><C-n>]], o)
-      vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], o)
-      vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], o)
-      vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], o)
-      vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], o)
-    end
-    vim.cmd("autocmd! TermOpen term://* lua SetTerminalKeymaps()")
+    vim.api.nvim_create_autocmd("TermOpen", {
+      pattern = "term://*",
+      callback = function()
+        local o = { noremap = true, buffer = 0 }
+        vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]], o)
+        vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]], o)
+        vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]], o)
+        vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]], o)
+      end,
+    })
   end,
 }
