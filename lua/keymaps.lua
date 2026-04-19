@@ -8,11 +8,10 @@ keymap("i", "kj", "<ESC>", { desc = "Exit insert mode" })
 keymap("n", "<C-a>", "ggVG", { desc = "Select all" })
 keymap("n", "+", "<C-a>", { desc = "Increment number under cursor" })
 keymap("n", "-", "<C-x>", { desc = "Decrement number under cursor" })
-keymap("n", "<leader>w", ":update<CR>", { desc = "Save current file" })
 
 -- Diagnostic keymaps
-keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+keymap("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Go to previous [D]iagnostic message" })
+keymap("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Go to next [D]iagnostic message" })
 keymap("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 keymap("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -43,10 +42,10 @@ keymap("n", "<A-1>", ":tabmove -<CR>", { desc = "Move tab to the left" })
 keymap("n", "<A-2>", ":tabmove +<CR>", { desc = "Move tab to the right" })
 
 -- Move text up and down
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", { desc = "move line up" })
-keymap("v", "<A-j>", ":m .+1<CR>==", { desc = "Move block down" })
-keymap("v", "<A-k>", ":m .-2<CR>==", { desc = "Move block up" })
+keymap("n", "<A-j>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
+keymap("n", "<A-k>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
+keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move block down" })
+keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move block up" })
 
 keymap("x", "J", ":move '>+1<CR>gv-gv", { desc = "Move selected text down" })
 keymap("x", "K", ":move '<-2<CR>gv-gv", { desc = "Move selected text up" })
