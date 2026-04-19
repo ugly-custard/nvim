@@ -25,21 +25,21 @@ keymap("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 keymap("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", { desc = "Resize horizontal split by -2" })
-keymap("n", "<C-Down>", ":resize +2<CR>", { desc = "Resize horizontal split by +2" })
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Resize vertical split by -2" })
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Resize vertical split by +2" })
+keymap("n", "<C-Up>", "<cmd>resize -2<CR>", { desc = "Resize horizontal split by -2" })
+keymap("n", "<C-Down>", "<cmd>resize +2<CR>", { desc = "Resize horizontal split by +2" })
+keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Resize vertical split by -2" })
+keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Resize vertical split by +2" })
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", { desc = "Switch to next buffer" })
-keymap("n", "<S-h>", ":bprevious<CR>", { desc = "Switch to previous buffer" })
+keymap("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Switch to next buffer" })
+keymap("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Switch to previous buffer" })
 
 -- Navigate tabs
-keymap("n", "<C-t>", ":tabnew<CR>", { desc = "Create a new tab" })
-keymap("n", "<Tab>", ":tabn<CR>", { desc = "Switch to next tab" })
-keymap("n", "<S-Tab>", ":tabp<CR>", { desc = "Switch to previous tab" })
-keymap("n", "<A-1>", ":tabmove -<CR>", { desc = "Move tab to the left" })
-keymap("n", "<A-2>", ":tabmove +<CR>", { desc = "Move tab to the right" })
+keymap("n", "<C-t>", "<cmd>tabnew<CR>", { desc = "Create a new tab" })
+keymap("n", "<Tab>", "<cmd>tabn<CR>", { desc = "Switch to next tab" })
+keymap("n", "<S-Tab>", "<cmd>tabp<CR>", { desc = "Switch to previous tab" })
+keymap("n", "<A-1>", "<cmd>tabmove -<CR>", { desc = "Move tab to the left" })
+keymap("n", "<A-2>", "<cmd>tabmove +<CR>", { desc = "Move tab to the right" })
 
 -- Move text up and down
 keymap("n", "<A-j>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
@@ -59,12 +59,10 @@ keymap("v", ">", ">gv", { desc = "Unindent selected text" })
 -- [[ Autocommands ]]
 
 -- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
--- vim.api.nvim_create_autocmd('TextYankPost', {
---   desc = 'Highlight when yanking (copying) text',
---   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
---   callback = function()
---     vim.highlight.on_yank()
---   end,
--- })
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
