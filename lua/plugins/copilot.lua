@@ -15,7 +15,7 @@ return {
         auto_trigger = true,
         accept = false,
         keymap = {
-          prev = "<C-h",
+          prev = "<C-h>",
           next = "<C-l>",
           dismiss = "<A-e>",
         },
@@ -51,7 +51,7 @@ return {
     },
     config = function(_, opts)
       require("CopilotChat").setup(opts)
-      vim.keymap.set("n", "<leader>c", ":CopilotChat<CR>", { desc = "Copilot Chat" })
+      vim.keymap.set("n", "<leader>cc", ":CopilotChat<CR>", { desc = "Copilot Chat" })
     end,
   },
 }
