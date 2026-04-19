@@ -1,5 +1,4 @@
 local options = {
-  mouse = "a",
   clipboard = "unnamedplus",
   title = true,
 
@@ -9,7 +8,6 @@ local options = {
   expandtab = true,
   autoindent = true,
   smartindent = true,
-  breakindent = true,
 
   -- Status column
   number = true,
@@ -24,7 +22,6 @@ local options = {
   showtabline = 1,
   synmaxcol = 500,
   -- conceallevel = 2,
-  termguicolors = true,
   winblend = 10, -- floating window transparency, 0->opaque
 
   -- Pop up menu
@@ -37,10 +34,8 @@ local options = {
   swapfile = false,
   writebackup = false,
   fileencoding = "utf-8",
-  encoding = "utf-8",
 
   -- Searching
-  inccommand = "split", -- nosplit default
   hlsearch = true,
   ignorecase = true,
   infercase = true,
@@ -53,7 +48,6 @@ local options = {
   timeoutlen = 400,
 
   -- Window
-  splitkeep = "screen",
   splitbelow = true,
   splitright = true,
 
