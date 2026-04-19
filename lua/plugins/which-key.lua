@@ -3,10 +3,16 @@ return {
     "folke/which-key.nvim",
     event = "VimEnter",
     config = function()
-      require("which-key").setup()
+      local wk = require("which-key")
+      wk.setup()
+
+      -- Browse all keymaps
+      vim.keymap.set("n", "<leader>?", function()
+        wk.show({ global = true })
+      end, { desc = "Show all keymaps" })
 
       -- Document existing key chains
-      require("which-key").add({
+      wk.add({
 
         { "<leader>c", group = "[C]ode" },
         { "<leader>c_", hidden = true },
@@ -18,8 +24,6 @@ return {
         { "<leader>s_", hidden = true },
         { "<leader>t", group = "[T]oggle" },
         { "<leader>t_", hidden = true },
-        { "<leader>w", group = "[W]orkspace" },
-        { "<leader>w_", hidden = true },
         { "<leader>h", group = "Git [H]unk" },
         { "<leader>h_", hidden = true },
 
