@@ -4,16 +4,16 @@ return {
     { "<leader>zz", desc = "A bit Zen" },
     { "<leader>zZ", desc = "Even more Zen" },
   },
-  opts = {},
-  config = function()
-    -- ZEN-MODE
+  opts = {
+    window = {
+      width = 90,
+      options = {},
+    },
+  },
+  config = function(_, opts)
+    require("zen-mode").setup(opts)
+
     vim.keymap.set("n", "<leader>zz", function()
-      require("zen-mode").setup({
-        window = {
-          width = 90,
-          options = {},
-        },
-      })
       require("zen-mode").toggle()
       vim.wo.wrap = true
       vim.wo.number = true
@@ -21,17 +21,11 @@ return {
     end)
 
     vim.keymap.set("n", "<leader>zZ", function()
-      require("zen-mode").setup({
-        window = {
-          width = 90,
-          options = {},
-        },
-      })
       require("zen-mode").toggle()
       vim.wo.wrap = false
       vim.wo.number = false
       vim.wo.rnu = false
-      vim.opt.colorcolumn = "0"
+      vim.wo.colorcolumn = "0"
     end)
   end,
 }
