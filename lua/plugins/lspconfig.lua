@@ -12,23 +12,18 @@ return {
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
-      { "folke/neodev.nvim", opts = {} },
+      { "folke/lazydev.nvim", opts = {} },
     },
     config = function()
-      local signs = {
-        { name = "DiagnosticSignError", text = "" },
-        { name = "DiagnosticSignWarn", text = "" },
-        { name = "DiagnosticSignHint", text = "󰌵" },
-        { name = "DiagnosticSignInfo", text = "" },
-      }
-      for _, sign in ipairs(signs) do
-        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-      end
-
-      local conf = {
-        virtual_text = false, -- disable virtual text
+      vim.diagnostic.config({
+        virtual_text = false,
         signs = {
-          active = signs, -- show signs
+          text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.HINT] = "󰌵",
+            [vim.diagnostic.severity.INFO] = "",
+          },
         },
         update_in_insert = true,
         underline = true,
@@ -37,12 +32,11 @@ return {
           focusable = true,
           style = "minimal",
           border = "rounded",
-          source = "always",
+          source = true,
           header = "",
           prefix = "",
         },
-      }
-      vim.diagnostic.config(conf)
+      })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -53,7 +47,7 @@ return {
 
           -- Jump to the definition (int x = 0;) of the word under your cursor.
           --  To jump back, press <C-t>.
-          map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+          map("gd", function() require("telescope.builtin").lsp_definitions() end, "[G]oto [D]efinition")
 
           -- Jump to the definition (int x;) of the word under your cursor.
           --  For example, in C this would take you to the header.
@@ -62,22 +56,22 @@ return {
           map("gl", vim.diagnostic.open_float, "Open Diagnostics Float")
 
           -- Jump to the implementation of the word under your cursor.
-          map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+          map("gI", function() require("telescope.builtin").lsp_implementations() end, "[G]oto [I]mplementation")
 
           -- Find references for the word under your cursor.
-          map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+          map("gr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+          map("<leader>D", function() require("telescope.builtin").lsp_type_definitions() end, "Type [D]efinition")
 
           -- Fuzzy find all the symbols in your current document (single file).
           --  Symbols are things like variables, functions, types, etc.
-          map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+          map("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
 
           -- Fuzzy find all the symbols in your current workspace (entire project).
-          map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+          map("<leader>ws", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, "[W]orkspace [S]ymbols")
 
           -- Rename the variable under your cursor, across all files.
           map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
@@ -89,7 +83,7 @@ return {
           -- Opens a popup that displays documentation about the word under your cursor
           map("K", vim.lsp.buf.hover, "Hover Documentation")
 
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          local client = vim.lsp.get_clients({ id = event.data.client_id })[1]
           -- Highlight all references of a word under the cursor
           -- Clear them when cursor is moved
           if client and client.server_capabilities.documentHighlightProvider then
@@ -116,7 +110,7 @@ return {
           end
 
           -- Enable inlay hints. may be unwanted, since they displace some of the code
-          if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+          if client and client.server_capabilities.inlayHintProvider then
             map("<leader>th", function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, "[T]oggle Inlay [H]ints")
@@ -124,8 +118,7 @@ return {
         end,
       })
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       local servers = {
         lua_ls = {
@@ -147,6 +140,13 @@ return {
         },
         html = {},
         cssls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              staticcheck = true,
+            },
+          },
+        },
         tailwindcss = {
           root_dir = require("lspconfig.util").root_pattern(".git"),
         },
