@@ -63,7 +63,7 @@ local options = {
   wrap = true,
   linebreak = true,
   whichwrap = "bs<>[]hl",
-  colorcolumn = "80", -- set colorcolumn at 80
+  colorcolumn = "100", -- set colorcolumn at 80
 
   -- list = true, -- sets how display certain whitespace characters in editor
   -- listchars = {
@@ -71,6 +71,22 @@ local options = {
   -- 	trail = "·",
   -- 	nbsp = "␣",
   -- },
+
+  -- Folding
+  foldenable = true,
+  foldmethod = "expr",
+  foldexpr = "v:lua.vim.treesitter.foldexpr()",
+  foldlevel = 99,
+  foldlevelstart = 99,
+  foldcolumn = "auto:1",
+  fillchars = {
+    foldopen = "",
+    foldclose = "",
+    foldsep = " ",
+    fold = " ",
+    foldinner = " ",
+  },
+
   completeopt = { -- mostly just for cmp
     "menu",
     "menuone",
