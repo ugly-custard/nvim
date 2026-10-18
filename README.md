@@ -26,11 +26,47 @@ Both profiles:
 
 - node/npm (prettierd and the JS/TS servers), go, python3 (debugpy)
 - `perl-yaml-tiny` and `perl-file-homedir` — latexindent, used for LaTeX formatting
+- a TeX distribution with `latexmk` (vimtex compiles), `chktex` (texlab lints) and `latexindent`
+  (Arch: `texlive-binextra`), plus `zathura` with a PDF backend for `:VimtexView`
 - ImageMagick (`magick`) — image.nvim
 - a Nerd Font
 
 Mason installs the language servers and tools (stylua, prettierd, shellcheck, the debug adapters)
 into `~/.local/share/nvim/mason` on the first `full` launch.
+
+## Terminal and tmux
+
+Nothing here needs a specific terminal. These integrations need settings outside this repo:
+
+tmux (`~/.config/tmux/tmux.conf`):
+
+```tmux
+set -s extended-keys on                  # nvim requests extended keys; without this, C-; and friends never arrive
+set -as terminal-features 'xterm*:extkeys'
+set -g set-clipboard on                  # OSC 52, the clipboard path used over SSH
+set -s get-clipboard request
+set -g allow-passthrough on              # lets image previews reach kitty through tmux
+```
+
+Moving from nvim into a shell pane with `C-h`/`C-j`/`C-k`/`C-l` needs the smart-splits tpm plugin
+(`set -g @plugin 'smart-splits-nvim/smart-splits.nvim'`), which marks panes with `@pane-is-vim` and
+honours its `@smart-splits_*_key` variables. nvim→tmux navigation and resizing work without it.
+
+## Git
+
+lazygit and terminal git use delta. `git-delta` (`pacman -S git-delta`) plus, in
+`~/.config/git/config`:
+
+```ini
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+[merge]
+  conflictStyle = zdiff3
+```
 
 ## Installation
 
