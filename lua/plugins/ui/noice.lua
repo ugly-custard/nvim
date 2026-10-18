@@ -5,12 +5,16 @@ return {
     "MunifTanjim/nui.nvim",
     "rcarriga/nvim-notify",
   },
+  keys = {
+    { "<leader>`", "<cmd>NoiceDismiss<CR>", desc = "Dismiss notifications" },
+  },
   opts = {
     lsp = {
+      -- fidget shows LSP progress.
+      progress = { enabled = false },
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
         ["vim.lsp.util.stylize_markdown"] = true,
-        ["cmp.entry.get_documentation"] = true,
       },
     },
     presets = {
@@ -22,8 +26,4 @@ return {
     },
     messages = { view = "mini", view_warn = "mini" },
   },
-  config = function(_, opts)
-    require("noice").setup(opts)
-    vim.keymap.set("n", "<leader>`", "<cmd>NoiceDismiss<CR>", { desc = "Dismiss Noice Message" })
-  end,
 }
