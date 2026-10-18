@@ -2,8 +2,7 @@ return {
   "chrisgrieser/nvim-origami",
   event = "VeryLazy",
   opts = {
-    foldKeymaps = {
-      setup = false,
-    },
+    -- Keep h/l/^/$ as plain motions.
+    foldKeymaps = { setup = false },
   },
 }
